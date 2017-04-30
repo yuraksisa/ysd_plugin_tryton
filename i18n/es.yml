@@ -1,0 +1,14 @@
+tryton_setup:
+  title: Configuración
+  connection: Configuración de la conexión
+  sync: Configuración de la sincronización
+  url: URL
+  database: Base de datos
+  username: Usuario
+  password: Contraseña
+  sync_deposit: Sincronitzar cobros en tiempo real  
+tryton:
+  days: !!pl
+    1: "(1 día)"
+    n: "(%1 días)"
+  extra_days: "%1 (día extra)"

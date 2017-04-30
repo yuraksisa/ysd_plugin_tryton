@@ -1,0 +1,41 @@
+<style>
+#table {
+  table-layout: fixed;
+  border: 1px solid #EEE;
+}
+ #table .table-cell {
+   border-right: 1px solid #EEE;
+   width: 1.6em;
+   font-size: 0.85em;
+ }
+</style>
+<div class="top-navigation-bar">
+  <h2 class="entity-title">Depósitos pendientes de traspasar a Tryton</h2> 
+</div>
+<div class="admin_content_wrapper">
+  <div>
+      <table id="table" class="table">
+        <thead class="table-header">
+          <tr>
+            <th class="table-cell left_text" scope="col" style="width:10%">Id</th>
+            <th class="table-cell left_text" scope="col" style="width:20%">Fecha</th>
+            <th class="table-cell left_text" scope="col" style="width:20%">Importe</th>
+            <th class="table-cell left_text" scope="col" style="width:40%">Fuente</th>
+            <th class="table-cell left_text" scope="col" style="width:10%">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>    
+          <% @data.each do |charge| %>  
+          <tr class="table-row">
+            <td class="table-cell"><%= charge.id %></td>
+            <td class="table-cell"><%= charge.date.strftime('%Y-%m-%d %H:%M') %></td>
+            <td class="table-cell"><%= "%.2f" % charge.amount %></td>
+            <td class="table-cell"><a href="<%= charge.charge_source.charge_source_url%>"><%= charge.charge_source.charge_source_description%></a></td>
+            <td class="table-cell"><form action="/admin/tryton/charge/<%=charge.id%>" method="post"><input class="form-button blue-button" type="submit" value="Traspasar"/></form></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+  </div>
+</div>

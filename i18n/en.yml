@@ -1,0 +1,9 @@
+tryton_setup:
+  title: Configuration
+  connection: Connection Set up
+  sync: Synchronization Set up
+  url: URL
+  database: Database
+  username: Username
+  password: Password
+  sync_deposit: Real time charges synchronization

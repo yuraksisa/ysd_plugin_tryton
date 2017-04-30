@@ -1,0 +1,9 @@
+tryton_setup:
+  title: Configuració
+  connection: Configuració de la conexió
+  sync: Configuració de la sincronització
+  url: URL
+  database: Base de dades
+  username: Usuari
+  password: Clau
+  sync_deposit: Sincronitzar cobraments en temps real
