@@ -15,8 +15,8 @@ describe YsdPluginTryton::ChargeObserver do
       it "notifies to Tryton" do
 
         # Define two expectations to mock the mail notification when creating a booking
-        expect(booking_1_line_no_extras_2_days).to receive(:notify_manager)
-        expect(booking_1_line_no_extras_2_days).to receive(:notify_request_to_customer)
+        #expect(booking_1_line_no_extras_2_days).to receive(:notify_manager)
+        #expect(booking_1_line_no_extras_2_days).to receive(:notify_request_to_customer)
 
         # Creates the booking
         booking_1_line_no_extras_2_days.save
@@ -36,7 +36,7 @@ describe YsdPluginTryton::ChargeObserver do
            .with(charge.id).and_return({done: true, detail: '1'})
 
         # Define expectations to mock configuration 
-        expect(SystemConfiguration::Variable).to receive(:get_value).with('booking.notify_confirmation','true').and_return('false')
+        expect(SystemConfiguration::Variable).to receive(:get_value).with('booking.send_notifications','true').twice.and_return('false')
         expect(SystemConfiguration::Variable).to receive(:get_value).with('booking.hours_cadence',2).and_return(2)
         expect(SystemConfiguration::Variable).to receive(:get_value).with('tryton.sync_deposit','false').and_return('true')
 

@@ -33,7 +33,7 @@ module YsdPluginTryton
            :description => 'Tryton password', 
            :module => :tryton_integration})
         
-        SystemConfiguration::Variable.first_or_create({:name => 'tryton.sync_deposit'},
+        SystemConfiguration::SecureVariable.first_or_create({:name => 'tryton.sync_deposit'},
           {:value => 'false',
            :description => 'Setup the platform to sync deposits with Tryton',
            :module => :tryton_integration })

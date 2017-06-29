@@ -100,6 +100,12 @@ module YsdPluginTryton
                request["params"] << {
                                       "currency" => 24,
                                       "party" => 4,
+                                      "sale_date" => {
+                                        "__class__" => "date",
+                                        "day" => charge.date.day,
+                                        "month" => charge.date.month,
+                                        "year" => charge.date.year,
+                                      },
                                       "lines" => source.lines_to_tryton
                                     }
 
