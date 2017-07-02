@@ -20,7 +20,7 @@ module YsdPluginTryton
     #
     after :update do |charge|
 
-      if SystemConfiguration::Variable.get_value('tryton.sync_deposit','false').to_bool
+      if SystemConfiguration::SecureVariable.get_value('tryton.sync_deposit','false').to_bool
 
         if charge.status == :done
           unless ExternalIntegration::Data.first(source_system: 'mybooking',
@@ -38,7 +38,7 @@ module YsdPluginTryton
 
     after :create do |charge|
 
-      if SystemConfiguration::Variable.get_value('tryton.sync_deposit','false').to_bool
+      if SystemConfiguration::SecureVariable.get_value('tryton.sync_deposit','false').to_bool
       
         if charge.status == :done
           Integration.delay.create_deposit(charge.id)

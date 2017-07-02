@@ -12,7 +12,9 @@ module YsdPluginTryton
     #
     def self.create_deposit(charge_id)
 
-       request = build_create_deposit_request(charge_id) 
+       request = build_create_deposit_request(charge_id)
+
+       p "Tryton request: #{request.inspect}"
        
        if request[:done]
          # Creates the wrapper to connect to Tryton
@@ -88,7 +90,7 @@ module YsdPluginTryton
                           charge_source.order 
                         else
                           raise "Source is not valid"
-                        end  
+                        end
 
                # Build the request
                request = {
@@ -114,12 +116,18 @@ module YsdPluginTryton
                                       "reference" => source.id.to_s,
                                       "amount"    => {
                                 	      "__class__" => "Decimal",
-                                	      "decimal" => "%.2f" % charge_source.charge.amount
+                                	      "decimal" => "%.2f" % charge.amount
                                       }
                                     }
-               # Parameter 3 : journal                     
+               # Parameter 3 : journal (payment method)
+               payment_method = ExternalIntegration::Data.first(source_system: 'mybooking',
+                                                                source_entity: 'payment_method',
+                                                                source_id: charge.payment_method_id,
+                                                                destination_system: 'tryton',
+                                                                destination_entity: 'payment_method')
+               payment_method_code = payment_method ? [payment_method.destination_id.to_i,3].max : 3
                request["params"] << {
-           	                       "journal" => 3
+           	                       "journal" => payment_method_code
                                   }   
                return {done: true, response: request}
              else
