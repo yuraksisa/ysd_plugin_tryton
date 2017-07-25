@@ -16,13 +16,13 @@ module YsdPluginTryton
     #
     # After updating a charge
     #
-    #  - Integrates to Tryton
+    #  - Integrates to Tryton (do not process if the charge origin is tryton)
     #
     after :update do |charge|
 
       if SystemConfiguration::SecureVariable.get_value('tryton.sync_deposit','false').to_bool
 
-        if charge.status == :done
+        if charge.origin != 'tryton' and charge.status == :done
           unless ExternalIntegration::Data.first(source_system: 'mybooking',
                                                  source_entity: 'charge',
                                                  source_id: charge.id.to_s,
@@ -36,11 +36,16 @@ module YsdPluginTryton
       
     end
 
+    #
+    # After updating a charge
+    #
+    #  - Integrates to Tryton (do not process if the charge origin is tryton)
+    #
     after :create do |charge|
 
       if SystemConfiguration::SecureVariable.get_value('tryton.sync_deposit','false').to_bool
       
-        if charge.status == :done
+        if charge.origin != 'tryton' and charge.status == :done
           Integration.delay.create_deposit(charge.id)
         end
 
