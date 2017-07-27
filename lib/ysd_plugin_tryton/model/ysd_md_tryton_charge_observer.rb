@@ -18,6 +18,13 @@ module YsdPluginTryton
     #
     #  - Integrates to Tryton (do not process if the charge origin is tryton)
     #
+    #  IMPORTANT: In order to make this works the process of creating a charge for an order/booking must be the
+    #  following:
+    #
+    #     - Create the charge with 'pending' status
+    #     - Create the association between the order/booking and the charge
+    #     - Update the charge to 'done' status
+    #
     after :update do |charge|
 
       if SystemConfiguration::SecureVariable.get_value('tryton.sync_deposit','false').to_bool
@@ -37,26 +44,6 @@ module YsdPluginTryton
 
       end  
       
-    end
-
-    #
-    # After updating a charge
-    #
-    #  - Integrates to Tryton (do not process if the charge origin is tryton)
-    #
-    after :create do |charge|
-
-      if SystemConfiguration::SecureVariable.get_value('tryton.sync_deposit','false').to_bool
-
-        sync_only_first_charge = SystemConfiguration::SecureVariable.get_value('tryton.sync_only_first_charge', 'true').to_bool
-
-        if ((sync_only_first_charge and charge.charge_order == 1) or (!sync_only_first_charge)) and
-           charge.origin != 'tryton' and charge.status == :done
-          Integration.delay.create_deposit(charge.id)
-        end
-
-      end  
-
     end
     
   end
