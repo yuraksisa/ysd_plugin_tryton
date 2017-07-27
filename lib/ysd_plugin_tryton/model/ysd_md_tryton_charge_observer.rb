@@ -22,7 +22,10 @@ module YsdPluginTryton
 
       if SystemConfiguration::SecureVariable.get_value('tryton.sync_deposit','false').to_bool
 
-        if charge.origin != 'tryton' and charge.status == :done
+        sync_only_first_charge = SystemConfiguration::SecureVariable.get_value('tryton.sync_only_first_charge', 'true').to_bool
+        
+        if ((sync_only_first_charge and charge.charge_order == 1) or (!sync_only_first_charge)) and
+           charge.origin != 'tryton' and charge.status == :done
           unless ExternalIntegration::Data.first(source_system: 'mybooking',
                                                  source_entity: 'charge',
                                                  source_id: charge.id.to_s,
@@ -44,8 +47,11 @@ module YsdPluginTryton
     after :create do |charge|
 
       if SystemConfiguration::SecureVariable.get_value('tryton.sync_deposit','false').to_bool
-      
-        if charge.origin != 'tryton' and charge.status == :done
+
+        sync_only_first_charge = SystemConfiguration::SecureVariable.get_value('tryton.sync_only_first_charge', 'true').to_bool
+
+        if ((sync_only_first_charge and charge.charge_order == 1) or (!sync_only_first_charge)) and
+           charge.origin != 'tryton' and charge.status == :done
           Integration.delay.create_deposit(charge.id)
         end
 

@@ -7,3 +7,4 @@ tryton_setup:
   username: Usuari
   password: Clau
   sync_deposit: Sincronitzar cobraments en temps real
+  sync_only_first_charge: Sincronitzar només el primer cobrament d\'una reserva/comanda

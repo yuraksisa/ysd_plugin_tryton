@@ -6,7 +6,8 @@ tryton_setup:
   database: Base de datos
   username: Usuario
   password: Contraseña
-  sync_deposit: Sincronitzar cobros en tiempo real  
+  sync_deposit: Sincronizar cobros en tiempo real
+  sync_only_first_charge: Sincronizar sólo el primer cobro de una reserva/pedido
 tryton:
   days: !!pl
     1: "(1 día)"

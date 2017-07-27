@@ -7,3 +7,4 @@ tryton_setup:
   username: Username
   password: Password
   sync_deposit: Real time charges synchronization
+  sync_only_first_charge: It only synchronizes the first charge of a reservation/order

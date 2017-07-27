@@ -1,5 +1,11 @@
 module YsdPluginTryton
 	module OrderExtension
+    
+    def summary_planned
+      plann = order_items.inject([]) { |result, value| result << value.date.strftime('%Y-%m-%d'); result }
+      plann.uniq.join(', ')
+    end
+    
 		#
 		# Get a representation of the booking line for tryton
 		#

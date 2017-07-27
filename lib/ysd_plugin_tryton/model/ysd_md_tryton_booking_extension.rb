@@ -1,5 +1,10 @@
 module YsdPluginTryton
 	module BookingExtension
+    
+    def summary_planned
+      date_from.strftime('%Y-%m-%d')
+    end
+    
 		#
 		# Get a representation of the booking line for tryton
 		#

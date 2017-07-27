@@ -15,7 +15,8 @@
   
   <h2><%=t.tryton_setup.sync %></h2>
   <%= render_secure_variable_checkbox_boolean('tryton.sync_deposit', t.tryton_setup.sync_deposit) %>
-  
+  <%= render_secure_variable_checkbox_boolean('tryton.sync_only_first_charge', t.tryton_setup.sync_only_first_charge) %>
+
   <div class="formrow-botonera">
   	<input type="submit" value="<%=t.entitymanagement.update%>" 
   	       class="button blue-button">

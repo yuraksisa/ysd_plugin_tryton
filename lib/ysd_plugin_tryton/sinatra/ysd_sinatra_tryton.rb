@@ -22,6 +22,7 @@ module YsdPluginTryton
       #
       app.get '/admin/tryton/pending-charges', :allowed_usergroups => ['booking_manager','staff'] do 
 
+        @sync_only_first_charge = SystemConfiguration::SecureVariable.get_value('tryton.sync_only_first_charge', 'true').to_bool
         @data = Payments::Charge.tryton_pending 
         load_page :tryton_pending_charges
 
