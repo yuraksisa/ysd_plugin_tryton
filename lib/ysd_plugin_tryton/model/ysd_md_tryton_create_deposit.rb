@@ -94,7 +94,8 @@ module YsdPluginTryton
 
                # Build the request
                request = {
-       	                   "method" => "model.sale.deposit.manage",
+       	                   'method' => 'model.sale.deposit.manage',
+                           #"method" => "model.sale.request.manage",
        	                   "params" => []
                          }
 

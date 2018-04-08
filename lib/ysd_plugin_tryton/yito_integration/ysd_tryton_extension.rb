@@ -1,5 +1,5 @@
 #
-# MediaGallery Extension
+# Tryton Extension
 #
 module YsdPluginTryton
 
